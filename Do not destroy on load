@@ -1,0 +1,17 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+//I put this on the canvas element where the score text is.
+
+public class DoNotDestroy : MonoBehaviour
+{
+    // Use this for initialization
+    void Start()
+    {
+        GameObject.DontDestroyOnLoad(gameObject);
+    }
+}
+
+
+
