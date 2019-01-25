@@ -1,0 +1,20 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+//I put this on the portal 
+
+public class Portal : MonoBehaviour {
+
+	
+
+    void OnCollisionEnter2D(Collision2D coll)
+    {
+        // If the Collider2D component is enabled on the collided object
+        if (coll.collider == true)
+        {
+            SceneManager.LoadScene(0);
+        }
+    }
+}
