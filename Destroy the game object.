@@ -1,0 +1,15 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+//I put this on the bullet.
+
+
+public class DestroyObjectAfter5seconds : MonoBehaviour {
+
+    public float lifetime;
+    public GameObject bullet;
+    void Start()
+    {
+        Destroy(bullet,lifetime);
+    }
+}
