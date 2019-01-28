@@ -1,0 +1,19 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Instantiate : MonoBehaviour {
+    public GameObject cubeprefab;
+	// Use this for initialization
+	void Start () {
+		
+	}
+	
+	// Update is called once per frame
+	void FixedUpdate () {
+        if (Input.GetButtonDown("Fire1"))
+        {
+            Instantiate(cubeprefab, transform.position, Quaternion.identity);
+        }
+    }
+}
