@@ -1,0 +1,16 @@
+
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public class NextLevel : MonoBehaviour
+{
+    //I put this on the Next Level sprite
+   
+    void OnCollisionEnter2D(Collision2D coll)
+    {
+        // If the Collider2D component is enabled on the collided object
+
+        SceneManager.LoadScene(SceneManager.sceneCount + 1);
+
+    }
+}
