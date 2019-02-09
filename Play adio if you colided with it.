@@ -1,0 +1,17 @@
+using UnityEngine;
+
+public class AudioPick : MonoBehaviour
+{
+    //I put this on the beefburger sprite.
+public AudioClip pingsharp;
+    void OnCollisionEnter2D(Collision2D coll)
+    {
+        // If the Collider2D component is enabled on the collided object
+        if (coll.collider == true)
+        {
+
+            AudioSource.PlayClipAtPoint(pingsharp, transform.position);
+
+        }
+    }
+}
