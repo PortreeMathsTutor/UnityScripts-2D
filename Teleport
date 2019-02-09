@@ -1,0 +1,19 @@
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+//I put this on the teleport.
+
+public class GoToNextLevelOnContact : MonoBehaviour
+{
+
+
+    void OnCollisionEnter2D(Collision2D coll)
+    {
+        // If the Collider2D component is enabled on the collided object
+        if (coll.collider == true)
+        
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            }      
+    }
+}  
