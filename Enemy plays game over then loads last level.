@@ -1,0 +1,42 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public class KillsYouAndPlaysAudio : MonoBehaviour
+{
+    //I put this on the enemy that kills you plays
+    // game over then takes you to the credits
+
+    public GameObject obj;
+    public new AudioClip audio;
+    private AudioSource audiosource;
+   
+
+    public IEnumerator WaitForSound(AudioClip Sound)
+    {
+        yield return new WaitUntil(() => audiosource.isPlaying == false);
+        // or yield return new WaitWhile(() => audiosource.isPlaying == true);
+        if (obj != null)
+            obj.SetActive(true);
+      
+        SceneManager.LoadScene(2);//Do something
+    }
+    void OnCollisionEnter2D(Collision2D coll)
+    {
+        // If the Collider2D component is enabled on the collided object
+        if (coll.collider == true)
+        {
+          
+                audiosource = GetComponent<AudioSource>();
+                audiosource.clip = audio;
+                audiosource.Play();
+                StartCoroutine(WaitForSound(audio));
+            
+         
+
+
+        }
+    }
+}
+
