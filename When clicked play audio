@@ -1,0 +1,21 @@
+
+using UnityEngine;
+
+
+public class AdioSound : MonoBehaviour
+{
+    //I put this on the Next Level and Click Here sprite.
+    public AudioClip pingsharp;
+    // Update is called once per frame
+    void OnGUI()
+    {
+        Event m_Event = Event.current;
+
+        if (m_Event.type == EventType.MouseDown)
+        {
+
+            AudioSource.PlayClipAtPoint(pingsharp, transform.position);
+
+        }
+    }
+}
