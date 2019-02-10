@@ -3,4 +3,4 @@ CREATE TABLE `scores` (
    `name` VARCHAR(15) NOT NULL DEFAULT 'anonymous',
    `score` INT(10) UNSIGNED NOT NULL DEFAULT '0'
 )
-TYPE=MyISAM;
+ENGINE=MyISAM
