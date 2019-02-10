@@ -1,0 +1,29 @@
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public class NextLevel : MonoBehaviour
+{
+    public int margonOfError;
+    public Transform nextLevel;
+    public Vector2 position;
+
+
+
+    void OnGUI()
+    {
+        Event m_Event = Event.current;
+
+        if (m_Event.type == EventType.MouseDown)
+        {
+           
+            Debug.Log("mouse was clicked.");
+            Vector2 mousPosition = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
+            position = gameObject.transform.position;
+
+            if (Vector2.Distance(position, mousPosition) < margonOfError) {  SceneManager.LoadScene(1); }
+        }
+    }
+}
+  
+
+
