@@ -1,0 +1,133 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+public class SubmitAndLoadSores : MonoBehaviour
+{
+    private string secretKey = "mvri4839ahjs3"; // Edit this value and make sure it's the same as the one stored on the server
+    string addScoreURL = "http://portree7.000webhostapp.com/scores/addscore.php?"; //be sure to add a ? to your url
+    string highScoreNameTenURL = "http://portree7.000webhostapp.com/scores/displaynten.php";
+    string highScoreScoreTenURL = "http://portree7.000webhostapp.com/scores/displaysten.php";
+
+    int highScore = 0;
+    public string playerUsername;
+    public float score;
+
+    public string Md5Sum(string strToEncrypt) // encrypts the player username and score to be sent to the online database
+    {
+        System.Text.UTF8Encoding ue = new System.Text.UTF8Encoding();
+        byte[] bytes = ue.GetBytes(strToEncrypt);
+
+        // encrypt bytes
+        System.Security.Cryptography.MD5CryptoServiceProvider md5 = new System.Security.Cryptography.MD5CryptoServiceProvider();
+        byte[] hashBytes = md5.ComputeHash(bytes);
+
+        // Convert the encrypted bytes back to a string (base 16)
+        string hashString = "";
+
+        for (int i = 0; i < hashBytes.Length; i++)
+        {
+            hashString += System.Convert.ToString(hashBytes[i], 16).PadLeft(2, '0');
+        }
+
+        return hashString.PadLeft(32, '0');
+    }
+
+
+    void Start()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
+
+    void Update()
+    {
+        score = ColectCoins.score; // We need to acces the score value that is stored in a different script.
+    }
+
+    public void ScoreReloadTen()
+    {
+        StartCoroutine(GetScoresNameTen());
+        StartCoroutine(GetScoresScoreTen());
+        Debug.Log("LoadingScores");
+    }
+
+    public void SubmitPlayerUsername() //changes playerUsername to the submitted username from the highscore screen
+    {
+        playerUsername = GameObject.Find("PlayerNameInput").GetComponent<InputField>().text;
+    }
+
+    public void Submit()
+    {
+        if (highScore != (int)score)
+        {
+            highScore = (int)score;
+            StartCoroutine(PostScores(playerUsername, highScore));
+        }
+    }
+
+
+
+
+    // remember to use StartCoroutine when calling this function!
+    IEnumerator PostScores(string name, int score)
+    {
+        Debug.Log(name);
+        Debug.Log(score);
+        //This connects to a server side php script that will add the name and score to a MySQL DB.
+        // Supply it with a string representing the players name and the players score.
+        string hash = Md5Sum(name + score + secretKey);
+        Debug.Log(hash);
+
+
+        string post_url = addScoreURL + "name=" + WWW.EscapeURL(name) + "&score=" + score + "&hash=" + hash;
+        Debug.Log(post_url);
+
+        // Post the URL to the site and create a download object to get the result.
+        WWW hs_post = new WWW(post_url);
+        yield return hs_post; // Wait until the download is done
+
+        if (hs_post.error != null)
+        {
+            Debug.Log("There was an error posting the high score: " + hs_post.error);
+        }
+        else
+        {
+            Debug.Log("possible score upload sucess");
+        }
+    }
+
+    // Get the scores from the MySQL DB to display in a GUIText.
+    // remember to use StartCoroutine when calling this function!
+    IEnumerator GetScoresNameTen()
+    {
+        WWW hs_get = new WWW(highScoreNameTenURL);
+        yield return hs_get;
+
+        if (hs_get.error != null)
+        {
+            Debug.Log("There was an error getting the high score names: " + hs_get.error);
+        }
+        else
+        {
+            GameObject.Find("HSNTenList").GetComponent<Text>().text = hs_get.text; // this is a GUIText that will display the scores in game.
+        }
+    }
+
+    IEnumerator GetScoresScoreTen()
+    {
+        GameObject.Find("HSSTenList").GetComponent<Text>().text = "";
+        WWW hs_get = new WWW(highScoreScoreTenURL);
+        yield return hs_get;
+
+        if (hs_get.error != null)
+        {
+            Debug.Log("There was an error getting the high score: " + hs_get.error);
+        }
+        else
+        {
+            GameObject.Find("HSSTenList").GetComponent<Text>().text = hs_get.text; // this is a GUIText that will display the scores in game.
+        }
+    }
+
+
+}
