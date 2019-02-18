@@ -1,0 +1,41 @@
+
+using UnityEngine;
+using UnityEngine.UI;
+
+public class UIController : MonoBehaviour
+{
+    public Text currentHighscore; //Reference "xxx Current 
+  //  Highscore" text component of that GameObject in our scene
+public Text currentPlayerName; //Reference "yyyyy Current
+                               // Name" text component of that GameObject in our scene
+                               // Start is called before the first frame update
+
+    public int score;
+    public string playerName;
+    void Start()
+    {
+        playerName = GameObject.Find("DoNotDestroyScoreAndPlayernameTracker").
+        GetComponent<ScoreAndPlayername>().playerName;
+        score = GameObject.Find("DoNotDestroyScoreAndPlayernameTracker").
+        GetComponent<ScoreAndPlayername>().score;
+        // fetches the value for score and playerName from our DoNotDestroyObject GameObject's ScoreAndPlayername script
+    currentHighscore.text = score.ToString() + " Current  Highscore";
+    // prints the score on the top left of the screen
+currentPlayerName.text = "Player's Current Name: " +playerName;
+        // prints the name on the bottom left of the screen
+    }
+
+    public void OnUsernameEdit()
+    {
+        playerName = GameObject.Find("PlayerNameInputField").
+        GetComponent<InputField>().text;
+        currentPlayerName.text = "Player's Current Name: " + playerName;
+        // updates the local playerName to match the userinput username and prints it on the bottom left of the screen
+
+        GameObject.Find("DoNotDestroyScoreAndPlayernameTracker").GetComponent<ScoreAndPlayername>().playerName = playerName;
+        // updates playerName on the ScoreAndPlayername script not nessasairy for the tutorial but if we don't it it could
+        // cause problems if you change to a different scene and back to this one in your own game
+
+
+    }
+}
