@@ -1,0 +1,15 @@
+using UnityEngine;
+
+public class ScoreAndPlayername : MonoBehaviour
+{
+    public int score;// the players current score
+    public string playerName = "John";  // the players current given name.
+    // Start is called before the first frame update
+    void Start()
+    {
+        DontDestroyOnLoad(gameObject);  // stops the game object being 
+        //destroyed on scene changes.
+        score = Random.Range(0,100);// randomly generates a score 
+    }
+
+}
