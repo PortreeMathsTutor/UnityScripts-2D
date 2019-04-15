@@ -1,0 +1,38 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class SimpleMovementScript : MonoBehaviour
+{
+    Transform m_Transform;
+    public float m_Speed = 10.0f;
+
+    void Start()
+    {    m_Transform = GetComponent<Transform>();    }
+
+    void Update()
+    {
+        if (Input.GetKey("up"))
+        {
+           
+            transform.position = new Vector3(transform.position.x, transform.position.y+ m_Speed/50, transform.position.z);
+        }
+
+        if (Input.GetKey("down"))
+        {
+          
+            transform.position = new Vector3(transform.position.x, transform.position.y - m_Speed/100, transform.position.z);
+        }
+
+        if (Input.GetKey("left"))
+        {
+          
+            transform.position = new Vector3(transform.position.x - m_Speed/100, transform.position.y, transform.position.z);
+        }
+
+        if (Input.GetKey("right"))
+        {
+            transform.position = new Vector3(transform.position.x + m_Speed/100, transform.position.y, transform.position.z);
+        }
+    }
+}
